@@ -1,15 +1,21 @@
-<% items = Cartitem.where(cart_id: @cart.id) %>
-<% sum = 0 %>
+<% if flash[:notice] %>
+    <%= flash[:notice] %>
+<% end %>
 
+<% items = Cartitem.where(cart_id: current_cart.id) %>
+<% sum = 0 %>
 <% items.each do|item| %>
     <% product = Product.find(item.product_id) %>
     <p>
         <%= product.name %>
         <%= product.price %>円
         数量：<%= item.qty %>
-        <% sum += ((product.price).to_i * (item.qty).to_i) %>
+        <%= link_to 'カートから削除', cartitem_path(item.id), method: :delete %>
     </p>
+    <% sum += ((product.price).to_i * (item.qty).to_i) %>
 <% end %>
-合計金額：<%= sum %>円<br><br>
+<p>
+    合計金額：<%= sum %>円
+</p>
 
 <%= link_to '商品一覧に戻る', products_path %>

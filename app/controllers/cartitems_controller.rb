@@ -7,7 +7,7 @@ class CartitemsController < ApplicationController
         @cartitem = Cartitem.new(product_id: params[:cartitem][:product_id], cart_id: current_cart.id,
         qty: params[:cartitem][:qty])
         if @cartitem.save
-            flash[:notice] = 'カートに商品を追加しました'
+            flash[:notice] = 'カートに商品を追加しました。'
             redirect_to root_path
         else
             render new_cartitem_path
@@ -15,8 +15,9 @@ class CartitemsController < ApplicationController
     end
     
     def destroy
-        cartitem = Cartitem.find(params[:id])
-        cartitem.destroy
-        redirect_to root_path
+        @cartitem = Cartitem.find(params[:id])
+        @cartitem.destroy
+        flash[:notice] = 'カートから商品を削除しました。'
+        render 'carts/show'
     end
 end
