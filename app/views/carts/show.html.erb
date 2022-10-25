@@ -1,0 +1,15 @@
+<% items = Cartitem.where(cart_id: @cart.id) %>
+<% sum = 0 %>
+
+<% items.each do|item| %>
+    <% product = Product.find(item.product_id) %>
+    <p>
+        <%= product.name %>
+        <%= product.price %>円
+        数量：<%= item.qty %>
+        <% sum += ((product.price).to_i * (item.qty).to_i) %>
+    </p>
+<% end %>
+合計金額：<%= sum %>円<br><br>
+
+<%= link_to '商品一覧に戻る', products_path %>

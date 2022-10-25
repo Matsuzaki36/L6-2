@@ -1,0 +1,15 @@
+<% if flash[:notice] %>
+    <%= flash[:notice] %>
+<% end %>
+
+<% @products.each do |product| %>
+<p>
+    <%= product.name%>
+    <%= product.price%>円
+    <%= link_to '削除', product_path(product) ,method: :delete %>
+    <%= link_to 'カートに追加', new_cartitem_path(product_id: product.id) %>
+</p>
+<% end %>
+
+<%= link_to '商品を追加する', new_product_path %><br>
+<%= link_to 'カートを見る', cart_path(current_cart.id) %>
